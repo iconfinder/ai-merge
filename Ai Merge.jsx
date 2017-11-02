@@ -1,4 +1,5 @@
 /**
+ * @fileOverview This script allows you to select a folder of SVG, AI, EPS, and/or PDF files and merge them into a single document.
  * @license See the enclosed LICENSE file for details.
  * @usage   See the enclosed README for installation and usage.
  */
