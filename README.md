@@ -4,11 +4,9 @@ This script is a JSX (JavaScript Extension) script for Adobe Illustrator to merg
 
 # CREDITS
 
-TODO: I need to look up the original source. Please bear with me while I locate this information.
-
 There may have been other scripts that inspired or were used in the creation of this script. Any omissions of credits are purely accidental. If you recognize an omission, please let me know and I will happily add credit where it is due.
 
-You are free to use, modify, and distribute this script as you see fit. No credit is required but would be greatly appreciated. 
+The JSON parser was written by Douglas Crockford. You can get a copy of the original code at https://github.com/douglascrockford/JSON-js/
 
 # DISCLAIMER OF LIABILITY
 
@@ -45,3 +43,24 @@ This script has only been tested on Adobe Illustrator CC 2014. It was written to
  6. The script will create a new Adobe Illustrator document with an artboard for each file. Please note that Adobe Illustrator allows up to 1,000 artboards so the script will only work on the first 1,000 files it finds.
   
  9. If logging is enabled (in the startup dialog) the script will create a log file named `ai-script-log.txt` on the Desktop of your computer. To turn this off, set the variable named `logging` to `false` near the top of the script.
+ 
+ 
+# The MIT License
+
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in
+> all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> SOFTWARE.
