@@ -1,25 +1,7 @@
 /**
- * @license Please see the enclosed LICENSE file for details.
- *
+ * @license See the enclosed LICENSE file for details.
+ * @usage   See the enclosed README for installation and usage.
  */
-/**
- *  Installation:
- *
- *      1. Copy this file to Illustrator > Presets > {lang} > Scripting where {lang} is your language code.
- *      2. Restart Adobe Illustrator
- *      3. Go to File > Scripts > Ai Merge
- *      4. Follow the prompts
- *
- *  Usage:
- *
- *      This script will import a folder of SVG files and merge them into a single document with
- *      the contents of each SVG file placed on a separate artboard. The artboard name will be set
- *      to the original SVG file's name without the file extension. The script will also search
- *      through any nested folders for SVG files. As of Adobe Illustrator CC 2018 (v 22.0.0),
- *      Illustrator supports a maximum of 1,000 artboards so the script will only import
- *      the first 1,000 SVG files it encounters.
- */
-
 #target Illustrator
 
 var originalInteractionLevel = userInteractionLevel;
