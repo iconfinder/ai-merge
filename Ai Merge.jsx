@@ -5,7 +5,7 @@
 /**
  *  Installation:
  *
- *      1. Copy this file to Illustrator > Presets > Scripting
+ *      1. Copy this file to Illustrator > Presets > {lang} > Scripting where {lang} is your language code.
  *      2. Restart Adobe Illustrator
  *      3. Go to File > Scripts > Ai Merge
  *      4. Follow the prompts
