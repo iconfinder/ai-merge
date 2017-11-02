@@ -157,6 +157,7 @@ Array.prototype.remove = function() {
 /*-------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Adds JSON library support for engines that do not include it natively.
+ * @author Douglas Crockford - https://github.com/douglascrockford/JSON-js/
  */
 "object"!=typeof JSON&&(JSON={}),function(){"use strict";function f(t){return 10>t?"0"+t:t}function quote(t){
     return escapable.lastIndex=0,escapable.test(t)?'"'+t.replace(escapable,function(t){var e=meta[t];
