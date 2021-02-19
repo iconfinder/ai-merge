@@ -699,10 +699,11 @@ function getFilesInSubfolders( srcFolder ) {
         }
     }
 
-    if (theFolders.length == 0) {
-        theFileList = Array.prototype.concat.apply([], getFilesInFolder(srcFolder));
-    }
-    else {
+    /* use the files of the source folder as default */
+    theFileList = getFilesInFolder(srcFolder);
+    
+    /* get files from subfolders and merge into fileList */
+    if (theFolders.length > 0) {
         for (var x=0; x < theFolders.length; x++) {
             theFileList = Array.prototype.concat.apply(theFileList, getFilesInFolder(theFolders[x]));
         }

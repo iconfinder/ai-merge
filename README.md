@@ -42,7 +42,7 @@ This script has only been tested on Adobe Illustrator CC 2014. It was written to
     
  6. The script will create a new Adobe Illustrator document with an artboard for each file. Please note that Adobe Illustrator allows up to 1,000 artboards so the script will only work on the first 1,000 files it finds.
   
- 9. If logging is enabled (in the startup dialog) the script will create a log file named `ai-script-log.txt` on the Desktop of your computer. To turn this off, set the variable named `logging` to `false` near the top of the script.
+ 9. If logging is enabled (in the startup dialog) the script will create a log file named `ai-script-log.txt` in the user's home directory. To turn this off, set the variable named `logging` to `false` near the top of the script.
  
  
 # The MIT License
