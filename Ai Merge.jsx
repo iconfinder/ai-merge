@@ -33,7 +33,7 @@ var CONFIG = {
     ARTBOARD_COUNT      : 1,
     ARTBOARD_WIDTH      : 24,
     ARTBOARD_HEIGHT     : 24,
-    ARTBOARD_SPACING    : 24,
+    ARTBOARD_SPACING    : 100,
     ARTBOARD_ROWSxCOLS  : 10,
     LOG_FILE_PATH       : HOME_FOLDER + "/ai-script-log.txt",
     CONFIG_FILE_PATH    : HOME_FOLDER + "/ai-script-conf.json",
@@ -100,6 +100,8 @@ var LANG = {
     FILETYPE_AI            : 'AI',
     FILETYPE_EPS           : 'EPS',
     FILETYPE_PDF           : 'PDF',
+    FILETYPE_PNG           : 'PNG',
+    FILETYPE_JPG           : 'JPG',
     BUTTON_CANCEL          : 'Cancel',
     BUTTON_OK              : 'Ok',
     DOES_NOT_EXIST         : ' does not exist',
@@ -339,14 +341,20 @@ function doDisplayDialog() {
         dialog.fileTypeSVG            = dialog.add('checkbox',   [c1, 315, c1w, 340], LANG.FILETYPE_SVG);
         dialog.fileTypeSVG.value      = CONFIG.FILETYPE_SVG;
 
-        dialog.fileTypeAI            = dialog.add('checkbox',    [c1 * 5, 315, c1w + 30, 340], LANG.FILETYPE_AI);
+        dialog.fileTypeAI            = dialog.add('checkbox',    [c1 * 4, 315, c1w + 30, 340], LANG.FILETYPE_AI);
         dialog.fileTypeAI.value      = CONFIG.FILETYPE_AI;
 
-        dialog.fileTypeEPS            = dialog.add('checkbox',   [c1 * 8, 315, c1w + 180, 340], LANG.FILETYPE_EPS);
+        dialog.fileTypeEPS            = dialog.add('checkbox',   [c1 * 6, 315, c1w + 180, 340], LANG.FILETYPE_EPS);
         dialog.fileTypeEPS.value      = CONFIG.FILETYPE_EPS;
 
-        dialog.fileTypePDF            = dialog.add('checkbox',   [c1 * 12, 315, c1w + 250, 340], LANG.FILETYPE_PDF);
+        dialog.fileTypePDF            = dialog.add('checkbox',   [c1 * 8, 315, c1w + 250, 340], LANG.FILETYPE_PDF);
         dialog.fileTypePDF.value      = CONFIG.FILETYPE_PDF;
+
+        dialog.fileTypePNG            = dialog.add('checkbox',   [c1 * 10, 315, c1w + 250, 340], LANG.FILETYPE_PNG);
+        dialog.fileTypePNG.value      = CONFIG.FILETYPE_PNG;
+
+        dialog.fileTypeJPG            = dialog.add('checkbox',   [c1 * 12, 315, c1w + 250, 340], LANG.FILETYPE_JPG);
+        dialog.fileTypeJPG.value      = CONFIG.FILETYPE_JPG;
 
         // Input folder
         dialog.folderBtn              = dialog.add('button',     [c1, 370, c1w, 400],  LANG.LABEL_CHOOSE_FOLDER, {name: 'folder'})
@@ -384,7 +392,7 @@ function doDisplayDialog() {
             CONFIG.ARTBOARD_HEIGHT     = parseInt(dialog.artboardHeight.text);
             CONFIG.LOGGING             = dialog.logging.value;
             CONFIG.SORT_ARTBOARDS      = dialog.sortboards.value;
-            CONFIG.SPACING             = parseInt(dialog.artboardSpacing.text);
+            CONFIG.ARTBOARD_SPACING             = parseInt(dialog.artboardSpacing.text);
             CONFIG.SCALE               = parseInt(dialog.scale.text);
             CONFIG.OUTPUT_FILENAME     = dialog.filename.text;
 
@@ -392,6 +400,8 @@ function doDisplayDialog() {
             CONFIG.FILETYPE_AI         = dialog.fileTypeAI.value;
             CONFIG.FILETYPE_EPS        = dialog.fileTypeEPS.value;
             CONFIG.FILETYPE_PDF        = dialog.fileTypePDF.value;
+            CONFIG.FILETYPE_PNG        = dialog.fileTypePNG.value;
+            CONFIG.FILETYPE_JPG        = dialog.fileTypeJPG.value;
 
             if (! hasOneFileType()) {
                 alert(LANG.SELECT_ONE_FILETYPE);
@@ -411,7 +421,6 @@ function doDisplayDialog() {
     }
     catch(ex) {
         logger(ex);
-        alert(ex);
     }
     return response;
 }
@@ -421,7 +430,7 @@ function doDisplayDialog() {
  * @returns {bool}
  */
 function hasOneFileType() {
-    return CONFIG.FILETYPE_SVG || CONFIG.FILETYPE_AI || CONFIG.FILETYPE_EPS || CONFIG.FILETYPE_PDF;
+    return CONFIG.FILETYPE_SVG || CONFIG.FILETYPE_AI || CONFIG.FILETYPE_EPS || CONFIG.FILETYPE_PDF || CONFIG.FILETYPE_PNG || CONFIG.FILETYPE_JPG;
 }
 
 /**
@@ -560,7 +569,7 @@ function filesToArtboards() {
             doc.artboards.setActiveArtboardIndex(i);
 
             var bits = srcFolder.name.split('-');
-            var boardName = fileList[i].name.replace(/\.svg|\.ai|\.eps|\.pdf/gi, "");
+            var boardName = fileList[i].name.replace(/\.svg|\.ai|\.eps|\.pdf|\.png|\.jpg/gi, "");
 
             /**
              * If the file is in a subfolder, prepend the
@@ -586,10 +595,10 @@ function filesToArtboards() {
                 var f = new File(fileList[i]);
                 if (f.exists) {
                     theFile = doc.groupItems.createFromFile(f);
+
                 }
 
                 var ext = "." + trim(f.type.toLowerCase());
-
                 updateProgress(
                     progress, 
                     CONFIG.ARTBOARD_COUNT, 
@@ -643,7 +652,7 @@ function filesToArtboards() {
  * @returns {void}
  */
 function centerObjects() {
-    doc = app.activeDocument;
+    // doc = app.activeDocument;
 
     var doc  = app.activeDocument;
     var progress = showProgressBar(doc.artboards.length);
@@ -717,7 +726,7 @@ function getFilesInSubfolders( srcFolder ) {
  * @returns {Array}
  */
 function getFilesInFolder(theFolder) {
-    var svgFileList = aiFileList = epsFileList = pdfFileList = [];
+    var svgFileList = aiFileList = epsFileList = pdfFileList = pngFileList = jpgFileList = [];
     if (CONFIG.FILETYPE_SVG) {
         svgFileList = theFolder.getFiles(/\.svg$/i);
         logger('Get ' + theFolder.getFiles(/\.svg$/i).length + ' SVG files');
@@ -734,7 +743,15 @@ function getFilesInFolder(theFolder) {
         pdfFileList = theFolder.getFiles(/\.pdf$/i);
         logger('Get ' + theFolder.getFiles(/\.pdf$/i).length + ' PDF files');
     }
-    return Array.prototype.concat.apply([], [svgFileList, aiFileList, epsFileList, pdfFileList]);
+    if (CONFIG.FILETYPE_PNG) {
+        pngFileList = theFolder.getFiles(/\.png$/i);
+        logger('Get ' + theFolder.getFiles(/\.png$/i).length + ' PNG files');
+    }
+    if (CONFIG.FILETYPE_JPG) {
+        jpgFileList = theFolder.getFiles(/\.jpg$/i);
+        logger('Get ' + theFolder.getFiles(/\.jpg$/i).length + ' JPG files');
+    }
+    return Array.prototype.concat.apply([], [svgFileList, aiFileList, epsFileList, pdfFileList, pngFileList, jpgFileList]);
 }
 
 /**
@@ -805,6 +822,7 @@ function logger(txt) {
 function write_file( path, txt, replace ) {
     try {
         var file = new File( path );
+
         if (replace && file.exists) {
             file.remove();
             file = new File( path );
